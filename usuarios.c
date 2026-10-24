@@ -9,7 +9,7 @@ int totalUsuarios = 0;
 
 void cadastrarUsuario() {
     if (totalUsuarios >= MAX_USUARIOS) {
-        printf("\n[ERRO] Limite máximo de usuários atingido!\n");
+        printf("\n[ERRO] Limite maximo de usuarios atingido!\n");
         return;
     }
 
@@ -18,7 +18,7 @@ void cadastrarUsuario() {
     printf("---------------------------------------------\n");
 
     int proximaMatricula = totalUsuarios + 1;
-    printf("Matrícula gerada automaticamente: %d\n", proximaMatricula);
+    printf("Matricula gerada automaticamente: %d\n", proximaMatricula);
 
     char tempNome[100];
     char tempCurso[50];
@@ -33,7 +33,7 @@ void cadastrarUsuario() {
             break; 
         }
         
-        printf("\n[ERRO] O nome não pode estar vazio! Tente novamente.\n\n");
+        printf("\n[ERRO] O nome nao pode estar vazio! Tente novamente.\n\n");
     }
 
     printf("Digite o curso: ");
@@ -41,7 +41,7 @@ void cadastrarUsuario() {
     tempCurso[strcspn(tempCurso, "\n")] = '\0';
 
     while (1) {
-        printf("Digite o telefone (somente números, com DDD e 9º dígito, ex: 47999998888): ");
+        printf("Digite o telefone (somente numeros, com DDD e 9º digito, ex: 47999998888): ");
         fgets(tempTelefone, sizeof(tempTelefone), stdin);
         tempTelefone[strcspn(tempTelefone, "\n")] = '\0';  
         
@@ -49,10 +49,9 @@ void cadastrarUsuario() {
             break; 
         }
         
-        printf("\n[ERRO] Telefone inválido! Deve conter exatamente 11 dígitos (apenas números). Tente novamente.\n\n");
+        printf("\n[ERRO] Telefone invalido! Deve conter exatamente 11 digitos (apenas numeros). Tente novamente.\n\n");
     }
 
-    // --- SALVANDO DADOS VÁLIDOS ---
     listaUsuarios[totalUsuarios].idmatricula = proximaMatricula;
     strcpy(listaUsuarios[totalUsuarios].nome, tempNome);
     strcpy(listaUsuarios[totalUsuarios].curso, tempCurso);
@@ -62,12 +61,12 @@ void cadastrarUsuario() {
     listaUsuarios[totalUsuarios].dataCadastro = *localtime(&t);
 
     totalUsuarios++;
-    printf("\n[SUCESSO] Usuário cadastrado com sucesso!\n");
+    printf("\n[SUCESSO] Usuario cadastrado com sucesso!\n");
 }
 
 void listarUsuarios() {
     if (totalUsuarios == 0) {
-        printf("\n[AVISO] Nenhum usuário cadastrado no sistema.\n");
+        printf("\n[AVISO] Nenhum usuario cadastrado no sistema.\n");
         return;
     }
 
@@ -77,7 +76,7 @@ void listarUsuarios() {
     
     int i; 
     for (i = 0; i < totalUsuarios; i++) {
-        printf("Matrícula: %d\n", listaUsuarios[i].idmatricula);
+        printf("Matricula: %d\n", listaUsuarios[i].idmatricula);
         printf("Nome     : %s\n", listaUsuarios[i].nome);
         printf("Curso    : %s\n", listaUsuarios[i].curso);
         printf("Telefone : %s\n", listaUsuarios[i].telefone);
@@ -94,7 +93,7 @@ void listarUsuarios() {
 
 void pesquisarUsuarios() {
     if (totalUsuarios == 0) {
-        printf("\n[AVISO] Nenhum usuário cadastrado para realizar a pesquisa.\n");
+        printf("\n[AVISO] Nenhum usuario cadastrado para realizar a pesquisa.\n");
         return;
     }
 
@@ -103,24 +102,24 @@ void pesquisarUsuarios() {
     
     while (1) {
         printf("\n---------------------------------------------\n");
-        printf("              PESQUISAR USUÁRIO              \n");
+        printf("              PESQUISAR USUARIO              \n");
         printf("---------------------------------------------\n");
-        printf("[1] Pesquisar por Matrícula (ID)\n");
+        printf("[1] Pesquisar por Matricula (ID)\n");
         printf("[2] Pesquisar por Nome\n");
         printf("[0] Voltar ao Menu Principal\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opcao: ");
         
         
         if (scanf("%d", &opcao) != 1) {
             while (getchar() != '\n'); 
-            printf("\n[ERRO] Entrada inválida! Digite um número.\n");
+            printf("\n[ERRO] Entrada invalida! Digite um numero.\n");
             continue; 
         }
         while (getchar() != '\n'); 
 
         if (opcao == 1) {
             int idBusca;
-            printf("Digite o número da matrícula: ");
+            printf("Digite o numero da matricula: ");
             scanf("%d", &idBusca);
             while (getchar() != '\n');
 
@@ -128,7 +127,7 @@ void pesquisarUsuarios() {
             int i;
             for (i = 0; i < totalUsuarios; i++) {
                 if (listaUsuarios[i].idmatricula == idBusca) {
-                    printf("\n--- Usuário Encontrado ---\n");
+                    printf("\n--- Usuario Encontrado ---\n");
                     printf("Matrícula: %d\n", listaUsuarios[i].idmatricula);
                     printf("Nome     : %s\n", listaUsuarios[i].nome);
                     printf("Curso    : %s\n", listaUsuarios[i].curso);
@@ -142,7 +141,7 @@ void pesquisarUsuarios() {
                 }
             }
             if (!encontrado) {
-                printf("\n[AVISO] Nenhum usuário encontrado com a matrícula %d.\n", idBusca);
+                printf("\n[AVISO] Nenhum usuario encontrado com a matricula %d.\n", idBusca);
             }
             break; 
 
@@ -170,14 +169,14 @@ void pesquisarUsuarios() {
                 }
             }
             if (!encontrado) {
-                printf("\n[AVISO] Nenhum usuário encontrado com o nome contendo '%s'.\n", nomeBusca);
+                printf("\n[AVISO] Nenhum usuario encontrado com o nome contendo '%s'.\n", nomeBusca);
             }
             break; 
 
         } else if (opcao == 0) {
             return; 
         } else {
-            printf("\n[ERRO] Opção inválida! Tente novamente.\n");
+            printf("\n[ERRO] Opcao invalida! Tente novamente.\n");
         }
     }
 }
@@ -190,23 +189,23 @@ void editarUsuarios() {
     char tempTelefone[15];
 
     if (totalUsuarios == 0) {
-        printf("\n[AVISO] Nenhum usuário cadastrado para editar.\n");
+        printf("\n[AVISO] Nenhum usuario cadastrado para editar.\n");
         return;
     }
 
     encontrado = 0;
     printf("\n---------------------------------------------\n");
-    printf("                EDITAR USUÁRIO               \n");
+    printf("                EDITAR USUARIO               \n");
     printf("---------------------------------------------\n");
 
-    printf("Digite a matrícula do usuário que deseja editar: ");
+    printf("Digite a matricula do usuario que deseja editar: ");
     if (scanf("%d", &matBusca) == 1) {
         limparBuffer();
 
         for (i = 0; i < totalUsuarios; i++) {
             if (listaUsuarios[i].idmatricula == matBusca) {
                 encontrado = 1;
-                printf("\n--- Usuário Encontrado [Matrícula: %d] ---\n", matBusca);
+                printf("\n--- Usuario Encontrado [Matricula: %d] ---\n", matBusca);
                 printf("Nome Atual    : %s\n", listaUsuarios[i].nome);
                 printf("Curso Atual   : %s\n", listaUsuarios[i].curso);
                 printf("Telefone Atual: %s\n", listaUsuarios[i].telefone);
@@ -217,7 +216,7 @@ void editarUsuarios() {
                 printf(" [2] Alterar Curso\n");
                 printf(" [3] Alterar Telefone\n");
                 printf(" [0] Cancelar\n");
-                printf("Opção: ");
+                printf("Opcao: ");
 
                 if (scanf("%d", &opcao) == 1) {
                     limparBuffer();
@@ -245,7 +244,7 @@ void editarUsuarios() {
 
                         case 3:
                             while (1) {
-                                printf("Digite o novo Telefone (11 dígitos, apenas números): ");
+                                printf("Digite o novo Telefone (11 digitos, apenas numeros): ");
                                 fgets(tempTelefone, sizeof(tempTelefone), stdin);
                                 tempTelefone[strcspn(tempTelefone, "\n")] = '\0';
 
@@ -254,30 +253,30 @@ void editarUsuarios() {
                                     printf("\n[SUCESSO] Telefone atualizado com sucesso!\n");
                                     break;
                                 }
-                                printf("\n[ERRO] Telefone inválido! Deve conter exatamente 11 dígitos.\n");
+                                printf("\n[ERRO] Telefone invalido! Deve conter exatamente 11 digitos.\n");
                             }
                             break;
 
                         case 0:
-                            printf("\nEdição cancelada.\n");
+                            printf("\nEdicao cancelada.\n");
                             break;
 
                         default:
-                            printf("\n[ERRO] Opção inválida!\n");
+                            printf("\n[ERRO] Opçao invalida!\n");
                     }
                 } else {
                     limparBuffer();
-                    printf("\n[ERRO] Opção inválida!\n");
+                    printf("\n[ERRO] Opcao invalida!\n");
                 }
                 break;
             }
         }
 
         if (!encontrado) {
-            printf("\n[ERRO] Matrícula %d não encontrada.\n", matBusca);
+            printf("\n[ERRO] Matricula %d nao encontrada.\n", matBusca);
         }
     } else {
         limparBuffer();
-        printf("\n[ERRO] Entrada inválida!\n");
+        printf("\n[ERRO] Entrada invalida!\n");
     }
 }

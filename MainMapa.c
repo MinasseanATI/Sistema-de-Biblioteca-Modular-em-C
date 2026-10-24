@@ -20,7 +20,7 @@ int main() {
     int subOpcao;
     
     inicializarSistema();
-    
+    carregarTodosOsDados();         
     do {
         printf("\n=============================================\n");
         printf("     SISTEMA DE GERENCIAMENTO DE BIBLIOTECA  \n");
@@ -56,7 +56,7 @@ int main() {
                     printf(" Escolha uma opcao: ");
                     
                     if (scanf("%d", &subOpcao) != 1) {
-                        printf("\n[ERRO] Caractere inválido! Digite apenas numeros.\n");
+                        printf("\n[ERRO] Caractere invalido! Digite apenas numeros.\n");
                         limparBuffer(); 
                         subOpcao = -1;  
                     } else {
@@ -66,6 +66,7 @@ int main() {
                     switch(subOpcao) {
                         case 1:
                             cadastrarLivro();
+                            salvarLivros();
                             break;
                         case 2:
                             listarLivros();
@@ -82,7 +83,7 @@ int main() {
                             break;
                         default:
                             if (subOpcao != -1) {
-                                printf("\n[ERRO] Opcao inválida! Tente novamente.\n");    
+                                printf("\n[ERRO] Opcao invalida! Tente novamente.\n");    
                             }
                     }
                 } while(subOpcao != 0);
@@ -102,7 +103,7 @@ int main() {
                     printf(" Escolha uma opcao: ");
 
                     if (scanf("%d", &subOpcao) != 1) {
-                        printf("\n[ERRO] Caractere inválido! Digite apenas numeros.\n");
+                        printf("\n[ERRO] Caractere invalido! Digite apenas numeros.\n");
                         limparBuffer();
                         subOpcao = -1;
                     } else {
@@ -112,6 +113,7 @@ int main() {
                     switch(subOpcao) {
                         case 1:
                             cadastrarUsuario();
+                            salvarUsuarios();
                             break;
                         case 2:
                             listarUsuarios();
@@ -128,7 +130,7 @@ int main() {
                             break;
                         default:
                             if (subOpcao != -1) {
-                                printf("\n[ERRO] Opcao inválida! Tente novamente.\n");
+                                printf("\n[ERRO] Opcao invalida! Tente novamente.\n");
                             }
                     }
                 } while(subOpcao != 0);
@@ -148,7 +150,7 @@ int main() {
                     printf(" Escolha uma opcao: ");
 
                     if (scanf("%d", &subOpcao) != 1) {
-                        printf("\n[ERRO] Caractere inválido! Digite apenas numeros.\n");
+                        printf("\n[ERRO] Caractere invalido! Digite apenas numeros.\n");
                         limparBuffer();
                         subOpcao = -1;
                     } else {
@@ -158,6 +160,7 @@ int main() {
                     switch(subOpcao) {
                         case 1:
                             cadastrarEmprestimos();
+                            salvarEmprestimos();
                             break;
                         case 2:
                             listarEmprestimos();
@@ -173,7 +176,7 @@ int main() {
                             break;
                         default:
                             if (subOpcao != -1) {
-                                printf("\n[ERRO] Opcao inválida! Tente novamente.\n");
+                                printf("\n[ERRO] Opcao invalida! Tente novamente.\n");
                             }
                     }
                 } while(subOpcao != 0);
@@ -191,7 +194,7 @@ int main() {
                     printf(" Escolha uma opcao: ");
 
                     if (scanf("%d", &subOpcao) != 1) {
-                        printf("\n[ERRO] Caractere inválido! Digite apenas numeros.\n");
+                        printf("\n[ERRO] Caractere invalido! Digite apenas numeros.\n");
                         limparBuffer();
                         subOpcao = -1;
                     } else {
@@ -210,7 +213,7 @@ int main() {
                             break;
                         default:
                             if (subOpcao != -1) {
-                                printf("\n[ERRO] Opcao inválida! Tente novamente.\n");
+                                printf("\n[ERRO] Opcao invalida! Tente novamente.\n");
                             }
                     }
                 } while(subOpcao != 0);
@@ -222,7 +225,7 @@ int main() {
 
             default:
                 if(opcao != -1){ 
-                    printf("\n[ERRO] Opcao inválida! Tente novamente.\n");
+                    printf("\n[ERRO] Opcao invalida! Tente novamente.\n");
                 }
         }
     } while (opcao != 0);

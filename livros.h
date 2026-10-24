@@ -14,6 +14,7 @@ struct CadastroLivros {
     bool status;
 };
 
+
 extern struct CadastroLivros listaLivros[MAX_LIVROS];
 extern int totalLivros;
 

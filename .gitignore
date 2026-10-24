@@ -4,3 +4,5 @@
 *.bak
 .vscode/
 .vs/
+*.layout
+*.dev

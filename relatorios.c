@@ -8,7 +8,7 @@
 #include "livros.h"
 #include "utils.h"
 
-// --- RELATÓRIO 1: LIVROS MAIS EMPRESTADOS ---
+// Relatorios de Mais emprestados
 void relatorioLivrosMaisEmprestados() {
     int i;
     int contadorEmprestimos[MAX_LIVROS];
@@ -22,16 +22,15 @@ void relatorioLivrosMaisEmprestados() {
     }
 
     if (totalEmprestimos == 0) {
-        printf("\n[AVISO] Nenhum empréstimo registrado para gerar estatísticas.\n");
+        printf("\n[AVISO] Nenhum emprestimo registrado para gerar estatisticas.\n");
         return;
     }
 
-    // Inicializa a contagem de cada livro com 0
     for (i = 0; i < totalLivros; i++) {
         contadorEmprestimos[i] = 0;
     }
 
-    // Conta quantas vezes cada ID de livro aparece no histórico de empréstimos
+    // Conta quantas vezes cada ID de livro aparece no histórico de emprestimos
     temEmprestimos = 0;
     for (i = 0; i < totalEmprestimos; i++) {
         idLivroAtual = listaEmprestimos[i].idLivros;
@@ -42,7 +41,7 @@ void relatorioLivrosMaisEmprestados() {
     }
 
     printf("\n---------------------------------------------\n");
-    printf("     RELATÓRIO: LIVROS MAIS EMPRESTADOS      \n");
+    printf("     RELATORIO: LIVROS MAIS EMPRESTADOS      \n");
     printf("---------------------------------------------\n");
 
     // Exibe a lista ordenada do mais emprestado para o menos emprestado
@@ -50,16 +49,16 @@ void relatorioLivrosMaisEmprestados() {
         for (i = 0; i < totalLivros; i++) {
             if (contadorEmprestimos[i] == maxEmprestimos) {
                 printf("ID Livro   : %d\n", i + 1);
-                printf("Título     : %s\n", listaLivros[i].titulo);
+                printf("Titulo     : %s\n", listaLivros[i].titulo);
                 printf("Autor      : %s\n", listaLivros[i].autor);
-                printf("Empréstimos: %d vez(es)\n", contadorEmprestimos[i]);
+                printf("Emprestimos: %d vez(es)\n", contadorEmprestimos[i]);
                 printf("---------------------------------------------\n");
             }
         }
     }
 }
 
-// --- RELATÓRIO 2: USUÁRIOS COM EMPRÉSTIMOS EM ATRASO ---
+// Emprestimos em atraso relatorio
 void relatorioUsuariosEmAtraso() {
     int i;
     int j;
@@ -76,20 +75,21 @@ void relatorioUsuariosEmAtraso() {
     int idxLivro;
 
     if (totalEmprestimos == 0) {
-        printf("\n[AVISO] Nenhum empréstimo registrado no sistema.\n");
+        printf("\n[AVISO] Nenhum emprestimo registrado no sistema.\n");
         return;
     }
 
     printf("\n---------------------------------------------\n");
-    printf("  RELATÓRIO: USUÁRIOS COM EMPRÉSTIMOS EM ATRASO\n");
+    printf("  RELATORIO: USUARIOS COM EMPRESTIMOS EM ATRASO\n");
     printf("---------------------------------------------\n");
 
     tempoAtual = time(NULL);
     atrasadosEncontrados = 0;
 
     for (i = 0; i < totalEmprestimos; i++) {
-        if (listaEmprestimos[i].status) { // Se o empréstimo estiver ATIVO
-            // Copia a data do empréstimo para manipulação
+    	// Se o emprestimo estiver ATIVO
+        if (listaEmprestimos[i].status) { 
+            // Copia a data do emprestimo para manipulação
             dataEmp = listaEmprestimos[i].dataEmpprestimo;
             tempoEmprestimo = mktime(&dataEmp);
             
@@ -115,10 +115,10 @@ void relatorioUsuariosEmAtraso() {
 
                 idxLivro = idLivro - 1;
 
-                printf("ID Empréstimo : %d\n", listaEmprestimos[i].idEmprestimo);
-                printf("Matrícula Usu.: %d\n", idUsuario);
+                printf("ID Emprestimo : %d\n", listaEmprestimos[i].idEmprestimo);
+                printf("Matricula Usu.: %d\n", idUsuario);
                 if (idxUsuario != -1) {
-                    printf("Nome Usuário  : %s\n", listaUsuarios[idxUsuario].nome);
+                    printf("Nome Usuario  : %s\n", listaUsuarios[idxUsuario].nome);
                     printf("Telefone      : %s\n", listaUsuarios[idxUsuario].telefone);
                 }
                 if (idxLivro >= 0 && idxLivro < totalLivros) {
@@ -131,7 +131,7 @@ void relatorioUsuariosEmAtraso() {
     }
 
     if (!atrasadosEncontrados) {
-        printf("\n[PARABÉNS] Não há nenhum empréstimo em atraso no momento!\n");
+        printf("\n[PARABENS] Nao ha nenhum emprestimo em atraso no momento!\n");
         printf("---------------------------------------------\n");
     }
 }

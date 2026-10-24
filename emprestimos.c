@@ -26,27 +26,27 @@ void cadastrarEmprestimos() {
     time_t t;
 
     if (totalEmprestimos >= MAX_EMPRESTIMOS) {
-        printf("\n[ERRO] Limite máximo de empréstimos atingido!\n");
+        printf("\n[ERRO] Limite maximo de emprestimos atingido!\n");
         return;
     }
 
     if (totalUsuarios == 0) {
-        printf("\n[AVISO] Não há usuários cadastrados para realizar um empréstimo.\n");
+        printf("\n[AVISO] Nao ha usuarios cadastrados para realizar um emprestimo.\n");
         return;
     }
 
     if (totalLivros == 0) {
-        printf("\n[AVISO] Não há livros cadastrados para realizar um empréstimo.\n");
+        printf("\n[AVISO] Nao ha livros cadastrados para realizar um emprestimo.\n");
         return;
     }
 
     printf("\n---------------------------------------------\n");
-    printf("            REALIZAR EMPRÉSTIMO              \n");
+    printf("            REALIZAR EMPRESTIMO              \n");
     printf("---------------------------------------------\n");
 
-    // --- VALIDAÇÃO DA MATRÍCULA DO USUÁRIO ---
+    // Validacao de matricula de usuario
     while (1) {
-        printf("Digite a matrícula do usuário: ");
+        printf("Digite a matricula do usuario: ");
         if (scanf("%d", &tempMatricula) == 1) {
             while (getchar() != '\n'); 
             
@@ -60,14 +60,14 @@ void cadastrarEmprestimos() {
             if (usuarioEncontrado) {
                 break; 
             }
-            printf("\n[ERRO] Matrícula não encontrada no sistema. Tente novamente.\n\n");
+            printf("\n[ERRO] Matricula nao encontrada no sistema. Tente novamente.\n\n");
         } else {
             while (getchar() != '\n');
-            printf("\n[ERRO] Entrada inválida! Digite um número.\n\n");
+            printf("\n[ERRO] Entrada invalida! Digite um numero.\n\n");
         }
     }
     
-    // --- VALIDAÇÃO DO ID DO LIVRO E DISPONIBILIDADE ---
+    // VAlidacao de livros disponivel
     while (1) {
         printf("Digite o ID do livro: ");
         if (scanf("%d", &tempIdLivro) == 1) {
@@ -79,18 +79,18 @@ void cadastrarEmprestimos() {
                 if (listaLivros[indiceLivro].status == true && listaLivros[indiceLivro].exemplares > 0) {
                     break; 
                 } else {
-                    printf("\n[ERRO] Livro indisponível ou sem exemplares no momento. Escolha outro.\n\n");
+                    printf("\n[ERRO] Livro indisponivel ou sem exemplares no momento. Escolha outro.\n\n");
                 }
             } else {
-                printf("\n[ERRO] ID de livro não encontrado. Tente novamente.\n\n");
+                printf("\n[ERRO] ID de livro nao encontrado. Tente novamente.\n\n");
             }
         } else {
             while (getchar() != '\n');
-            printf("\n[ERRO] Entrada inválida! Digite um número.\n\n");
+            printf("\n[ERRO] Entrada invalida! Digite um numero.\n\n");
         }
     }
     
-    // --- EFETIVANDO O EMPRÉSTIMO ---
+    
     indiceLivroReal = tempIdLivro - 1;
 
     listaEmprestimos[totalEmprestimos].idEmprestimo = totalEmprestimos + 1;
@@ -109,7 +109,7 @@ void cadastrarEmprestimos() {
     }
 
     totalEmprestimos++;
-    printf("\n[SUCESSO] Empréstimo registrado com sucesso!\n");
+    printf("\n[SUCESSO] Emprestimo registrado com sucesso!\n");
 }
 void listarEmprestimos() {
     int i;
@@ -120,12 +120,12 @@ void listarEmprestimos() {
     int diasRestantes;
 
     if (totalEmprestimos == 0) {
-        printf("\n[AVISO] Nenhum empréstimo registrado no sistema.\n");
+        printf("\n[AVISO] Nenhum emprestimo registrado no sistema.\n");
         return;
     }
 
     printf("\n---------------------------------------------\n");
-    printf("            LISTA DE EMPRÉSTIMOS             \n");
+    printf("            LISTA DE EMPRESTIMOS             \n");
     printf("---------------------------------------------\n");
     
     tempoAtual = time(NULL);
@@ -133,11 +133,11 @@ void listarEmprestimos() {
     for (i = 0; i < totalEmprestimos; i++) {
         dataDev = calcularDataDevolucao(listaEmprestimos[i].dataEmpprestimo, listaEmprestimos[i].dataPrevista);
 
-        printf("ID Empréstimo : %d\n", listaEmprestimos[i].idEmprestimo);
-        printf("Matrícula Usu.: %d\n", listaEmprestimos[i].idmatricula);
+        printf("ID Emprestimo : %d\n", listaEmprestimos[i].idEmprestimo);
+        printf("Matricula Usu.: %d\n", listaEmprestimos[i].idmatricula);
         printf("ID do Livro   : %d\n", listaEmprestimos[i].idLivros);
         
-        printf("Data Emprést. : %02d/%02d/%d\n", 
+        printf("Data Emprest. : %02d/%02d/%d\n", 
             listaEmprestimos[i].dataEmpprestimo.tm_mday, 
             listaEmprestimos[i].dataEmpprestimo.tm_mon + 1, 
             listaEmprestimos[i].dataEmpprestimo.tm_year + 1900);
@@ -167,7 +167,6 @@ void listarEmprestimos() {
     }
 }
 
-// --- LÓGICA DE DEVOLUÇÃO DE LIVROS ---
 void devolverLivros() {
     int idEmpBusca;
     int i;
@@ -175,16 +174,16 @@ void devolverLivros() {
     int indiceLivro;
 
     if (totalEmprestimos == 0) {
-        printf("\n[AVISO] Nenhum empréstimo registrado para realizar devolução.\n");
+        printf("\n[AVISO] Nenhum emprestimo registrado para realizar devolucao.\n");
         return;
     }
 
     printf("\n---------------------------------------------\n");
-    printf("              DEVOLUÇÃO DE LIVRO             \n");
+    printf("              DEVOLUCAO DE LIVRO             \n");
     printf("---------------------------------------------\n");
 
     while (1) {
-        printf("Digite o ID do Empréstimo a ser devolvido: ");
+        printf("Digite o ID do Emprestimo a ser devolvido: ");
         if (scanf("%d", &idEmpBusca) == 1) {
             while (getchar() != '\n');
 
@@ -194,7 +193,7 @@ void devolverLivros() {
                     encontrado = 1;
 
                     if (!listaEmprestimos[i].status) {
-                        printf("\n[AVISO] Este empréstimo já consta como DEVOLVIDO!\n");
+                        printf("\n[AVISO] Este emprestimo ja consta como DEVOLVIDO!\n");
                         return;
                     }
 
@@ -210,16 +209,15 @@ void devolverLivros() {
             }
 
             if (!encontrado) {
-                printf("\n[ERRO] Empréstimo com ID %d não foi encontrado. Tente novamente.\n\n", idEmpBusca);
+                printf("\n[ERRO] Emprestimo com ID %d nao foi encontrado. Tente novamente.\n\n", idEmpBusca);
             }
         } else {
             while (getchar() != '\n');
-            printf("\n[ERRO] Entrada inválida! Digite um número.\n\n");
+            printf("\n[ERRO] Entrada invalida! Digite um numero.\n\n");
         }
     }
 }
 
-// --- LÓGICA DE RENOVAÇÃO DE EMPRÉSTIMO ---
 void renovarEmprestimos() {
     int idEmpBusca;
     int i;
@@ -227,16 +225,16 @@ void renovarEmprestimos() {
     struct tm dataDev;
 
     if (totalEmprestimos == 0) {
-        printf("\n[AVISO] Nenhum empréstimo registrado para renovação.\n");
+        printf("\n[AVISO] Nenhum emprestimo registrado para renovacao.\n");
         return;
     }
 
     printf("\n---------------------------------------------\n");
-    printf("             RENOVAR EMPRÉSTIMO              \n");
+    printf("             RENOVAR EMPRESTIMO              \n");
     printf("---------------------------------------------\n");
 
     while (1) {
-        printf("Digite o ID do Empréstimo para renovação: ");
+        printf("Digite o ID do Emprestimo para renovacao: ");
         if (scanf("%d", &idEmpBusca) == 1) {
             while (getchar() != '\n');
 
@@ -246,7 +244,7 @@ void renovarEmprestimos() {
                     encontrado = 1;
 
                     if (!listaEmprestimos[i].status) {
-                        printf("\n[ERRO] Não é possível renovar um empréstimo que já foi devolvido!\n");
+                        printf("\n[ERRO] Nao e possivel renovar um emprestimo que já foi devolvido!\n");
                         return;
                     }
 
@@ -254,8 +252,8 @@ void renovarEmprestimos() {
 
                     dataDev = calcularDataDevolucao(listaEmprestimos[i].dataEmpprestimo, listaEmprestimos[i].dataPrevista);
 
-                    printf("\n[SUCESSO] Empréstimo renovado com sucesso por mais 7 dias!\n");
-                    printf("Nova Data Prevista de Devolução: %02d/%02d/%d\n",
+                    printf("\n[SUCESSO] Emprestimo renovado com sucesso por mais 7 dias!\n");
+                    printf("Nova Data Prevista de Devolucao: %02d/%02d/%d\n",
                         dataDev.tm_mday,
                         dataDev.tm_mon + 1,
                         dataDev.tm_year + 1900);
@@ -264,11 +262,11 @@ void renovarEmprestimos() {
             }
 
             if (!encontrado) {
-                printf("\n[ERRO] Empréstimo com ID %d não foi encontrado. Tente novamente.\n\n", idEmpBusca);
+                printf("\n[ERRO] Emprestimo com ID %d nao foi encontrado. Tente novamente.\n\n", idEmpBusca);
             }
         } else {
             while (getchar() != '\n');
-            printf("\n[ERRO] Entrada inválida! Digite um número.\n\n");
+            printf("\n[ERRO] Entrada invalida! Digite um numero.\n\n");
         }
     }
 }

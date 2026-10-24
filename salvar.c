@@ -7,16 +7,15 @@
 #include "livros.h"
 #include "emprestimos.h"
 
-// --- 1. SALVAR USUÁRIOS (txt) ---
 void salvarUsuarios() {
     FILE *arq = fopen("usuarios.txt", "w");
     if (arq == NULL) {
-        printf("\n[ERRO] Não foi possível abrir 'usuarios.txt' para escrita.\n");
+        printf("\n[ERRO] Nao foi possivel abrir 'usuarios.txt' para escrita.\n");
         return;
     }
 
     int i;
-    // Escreve a quantidade total na primeira linha
+    
     fprintf(arq, "%d\n", totalUsuarios);
 
     for (i = 0; i < totalUsuarios; i++) {
@@ -33,11 +32,11 @@ void salvarUsuarios() {
     fclose(arq);
 }
 
-// --- 2. SALVAR LIVROS (txt) ---
+
 void salvarLivros() {
     FILE *arq = fopen("livros.txt", "w");
     if (arq == NULL) {
-        printf("\n[ERRO] Não foi possível abrir 'livros.txt' para escrita.\n");
+        printf("\n[ERRO] Nao foi possivel abrir 'livros.txt' para escrita.\n");
         return;
     }
 
@@ -57,11 +56,10 @@ void salvarLivros() {
     fclose(arq);
 }
 
-// --- 3. SALVAR EMPRÉSTIMOS (txt) ---
 void salvarEmprestimos() {
     FILE *arq = fopen("emprestimos.txt", "w");
     if (arq == NULL) {
-        printf("\n[ERRO] Não foi possível abrir 'emprestimos.txt' para escrita.\n");
+        printf("\n[ERRO] Nao foi possivel abrir 'emprestimos.txt' para escrita.\n");
         return;
     }
 
@@ -83,104 +81,119 @@ void salvarEmprestimos() {
     fclose(arq);
 }
 
-// --- 4. BACKUP AUTOMÁTICO ---
+
 void realizarBackup() {
-    // Copia o conteúdo dos arquivos principais para cópias de segurança (.bak)
-    char ch;
+    int ch; 
     FILE *origem, *destino;
 
-    // Backup Usuários
     origem = fopen("usuarios.txt", "r");
     if (origem != NULL) {
         destino = fopen("usuarios_backup.bak", "w");
-        while ((ch = fgetc(origem)) != EOF) fputc(ch, destino);
+        if (destino != NULL) {
+            while ((ch = fgetc(origem)) != EOF) {
+                fputc(ch, destino);
+            }
+            fclose(destino);
+        }
         fclose(origem);
-        fclose(destino);
     }
 
-    // Backup Livros
     origem = fopen("livros.txt", "r");
     if (origem != NULL) {
         destino = fopen("livros_backup.bak", "w");
-        while ((ch = fgetc(origem)) != EOF) fputc(ch, destino);
+        if (destino != NULL) {
+            while ((ch = fgetc(origem)) != EOF) {
+                fputc(ch, destino);
+            }
+            fclose(destino);
+        }
         fclose(origem);
-        fclose(destino);
     }
 
-    // Backup Empréstimos
     origem = fopen("emprestimos.txt", "r");
     if (origem != NULL) {
         destino = fopen("emprestimos_backup.bak", "w");
-        while ((ch = fgetc(origem)) != EOF) fputc(ch, destino);
+        if (destino != NULL) {
+            while ((ch = fgetc(origem)) != EOF) {
+                fputc(ch, destino);
+            }
+            fclose(destino);
+        }
         fclose(origem);
-        fclose(destino);
     }
 }
 
-// --- 5. ORQUESTRADOR DE SALVAMENTO ---
-void salvarTodosOsDados() {
-    realizarBackup(); // Cria o backup antes de regravar os arquivos oficiais
-    salvarUsuarios();
-    salvarLivros();
-    salvarEmprestimos();
-}
-
-// --- 6. CARREGAR DADOS DOS ARQUIVOS (Inicialização) ---
 void carregarTodosOsDados() {
     FILE *arq;
     int i, statusInt;
-
-    // Carregar Usuários
+    char linha[300]; 
+    
+// Carrega os usuarios
     arq = fopen("usuarios.txt", "r");
     if (arq != NULL) {
-        if (fscanf(arq, "%d\n", &totalUsuarios) == 1) {
+        if (fgets(linha, sizeof(linha), arq) != NULL) {
+            sscanf(linha, "%d", &totalUsuarios);
             for (i = 0; i < totalUsuarios; i++) {
-                fscanf(arq, "%d;%99[^;];%49[^;];%14[^;];%d;%d;%d\n",
-                    &listaUsuarios[i].idmatricula,
-                    listaUsuarios[i].nome,
-                    listaUsuarios[i].curso,
-                    listaUsuarios[i].telefone,
-                    &listaUsuarios[i].dataCadastro.tm_mday,
-                    &listaUsuarios[i].dataCadastro.tm_mon,
-                    &listaUsuarios[i].dataCadastro.tm_year);
+                if (fgets(linha, sizeof(linha), arq) != NULL) {
+                    linha[strcspn(linha, "\n")] = 0;
+                    
+                    sscanf(linha, "%d;%99[^;];%49[^;];%14[^;];%d;%d;%d",
+                        &listaUsuarios[i].idmatricula,
+                        listaUsuarios[i].nome,
+                        listaUsuarios[i].curso,
+                        listaUsuarios[i].telefone,
+                        &listaUsuarios[i].dataCadastro.tm_mday,
+                        &listaUsuarios[i].dataCadastro.tm_mon,
+                        &listaUsuarios[i].dataCadastro.tm_year);
+                }
             }
         }
         fclose(arq);
     }
-
-    // Carregar Livros
+    
+// Carrega os livros
     arq = fopen("livros.txt", "r");
     if (arq != NULL) {
-        if (fscanf(arq, "%d\n", &totalLivros) == 1) {
+        if (fgets(linha, sizeof(linha), arq) != NULL) {
+            sscanf(linha, "%d", &totalLivros);
             for (i = 0; i < totalLivros; i++) {
-                fscanf(arq, "%99[^;];%99[^;];%49[^;];%d;%d;%d\n",
-                    listaLivros[i].titulo,
-                    listaLivros[i].autor,
-                    listaLivros[i].editora,
-                    &listaLivros[i].anoPublicado,
-                    &listaLivros[i].exemplares,
-                    &statusInt);
-                listaLivros[i].status = (statusInt == 1);
+                if (fgets(linha, sizeof(linha), arq) != NULL) {
+                    linha[strcspn(linha, "\n")] = 0;
+
+                    sscanf(linha, "%99[^;];%99[^;];%49[^;];%d;%d;%d",
+                        listaLivros[i].titulo,
+                        listaLivros[i].autor,
+                        listaLivros[i].editora,
+                        &listaLivros[i].anoPublicado,
+                        &listaLivros[i].exemplares,
+                        &statusInt);
+                    listaLivros[i].status = (statusInt == 1);
+                }
             }
         }
         fclose(arq);
     }
-
-    // Carregar Empréstimos
+    
+// Carrega os emprestimos
     arq = fopen("emprestimos.txt", "r");
     if (arq != NULL) {
-        if (fscanf(arq, "%d\n", &totalEmprestimos) == 1) {
+        if (fgets(linha, sizeof(linha), arq) != NULL) {
+            sscanf(linha, "%d", &totalEmprestimos);
             for (i = 0; i < totalEmprestimos; i++) {
-                fscanf(arq, "%d;%d;%d;%d;%d;%d;%d;%d\n",
-                    &listaEmprestimos[i].idEmprestimo,
-                    &listaEmprestimos[i].idmatricula,
-                    &listaEmprestimos[i].idLivros,
-                    &listaEmprestimos[i].dataEmpprestimo.tm_mday,
-                    &listaEmprestimos[i].dataEmpprestimo.tm_mon,
-                    &listaEmprestimos[i].dataEmpprestimo.tm_year,
-                    &listaEmprestimos[i].dataPrevista,
-                    &statusInt);
-                listaEmprestimos[i].status = (statusInt == 1);
+                if (fgets(linha, sizeof(linha), arq) != NULL) {
+                    linha[strcspn(linha, "\n")] = 0;
+
+                    sscanf(linha, "%d;%d;%d;%d;%d;%d;%d;%d",
+                        &listaEmprestimos[i].idEmprestimo,
+                        &listaEmprestimos[i].idmatricula,
+                        &listaEmprestimos[i].idLivros,
+                        &listaEmprestimos[i].dataEmpprestimo.tm_mday,
+                        &listaEmprestimos[i].dataEmpprestimo.tm_mon,
+                        &listaEmprestimos[i].dataEmpprestimo.tm_year,
+                        &listaEmprestimos[i].dataPrevista,
+                        &statusInt);
+                    listaEmprestimos[i].status = (statusInt == 1);
+                }
             }
         }
         fclose(arq);

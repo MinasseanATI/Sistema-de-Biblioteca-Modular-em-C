@@ -9,7 +9,7 @@ int totalLivros = 0;
 
 void cadastrarLivro() {
     if (totalLivros >= MAX_LIVROS) {
-        printf("\n[ERRO] Limite máximo de livros atingido!\n");
+        printf("\n[ERRO] Limite maximo de livros atingido!\n");
         return;
     }
 
@@ -28,14 +28,14 @@ void cadastrarLivro() {
 
    
     while (1) {
-        printf("Digite o título do livro: ");
+        printf("Digite o titulo do livro: ");
         fgets(tempTitulo, sizeof(tempTitulo), stdin);
         tempTitulo[strcspn(tempTitulo, "\n")] = '\0';
         
         if (strlen(tempTitulo) > 0) {
             break;
         }
-        printf("\n[ERRO] O título não pode estar vazio! Tente novamente.\n\n");
+        printf("\n[ERRO] O titulo nao pode estar vazio! Tente novamente.\n\n");
     }
 
  
@@ -47,7 +47,7 @@ void cadastrarLivro() {
         if (strlen(tempAutor) > 0) {
             break;
         }
-        printf("\n[ERRO] O autor não pode estar vazio! Tente novamente.\n\n");
+        printf("\n[ERRO] O autor nao pode estar vazio! Tente novamente.\n\n");
     }
 
     printf("Digite a editora: ");
@@ -55,13 +55,13 @@ void cadastrarLivro() {
     tempEditora[strcspn(tempEditora, "\n")] = '\0';
 
     while (1) {
-        printf("Digite o ano de publicação: ");
+        printf("Digite o ano de publicacao: ");
         if (scanf("%d", &tempAno) == 1 && tempAno > 0) {
             while (getchar() != '\n');
             break;
         }
         while (getchar() != '\n'); 
-        printf("\n[ERRO] Ano inválido! Digite um número válido.\n\n");
+        printf("\n[ERRO] Ano invalido! Digite um numero valido.\n\n");
     }
 
     while (1) {
@@ -71,17 +71,16 @@ void cadastrarLivro() {
             break;
         }
         while (getchar() != '\n');
-        printf("\n[ERRO] Quantidade inválida! Digite um número inteiro maior ou igual a zero.\n\n");
+        printf("\n[ERRO] Quantidade invalida! Digite um numero inteiro maior ou igual a zero.\n\n");
     }
 
-    // SALVANDO DADOS VÁLIDOS NA STRUCT OFICIAL 
+     
     strcpy(listaLivros[totalLivros].titulo, tempTitulo);
     strcpy(listaLivros[totalLivros].autor, tempAutor);
     strcpy(listaLivros[totalLivros].editora, tempEditora);
     listaLivros[totalLivros].anoPublicado = tempAno;
     listaLivros[totalLivros].exemplares = tempExemplares;
     
-    // Disponível (true) se tiver exemplares
     listaLivros[totalLivros].status = (tempExemplares > 0);
 
     totalLivros++;
@@ -101,12 +100,12 @@ void listarLivros() {
     int i;
     for (i = 0; i < totalLivros; i++) {
         printf("ID Livro   : %d\n", i + 1); 
-        printf("Título     : %s\n", listaLivros[i].titulo);
+        printf("Titulo     : %s\n", listaLivros[i].titulo);
         printf("Autor      : %s\n", listaLivros[i].autor);
         printf("Editora    : %s\n", listaLivros[i].editora);
         printf("Ano        : %d\n", listaLivros[i].anoPublicado);
         printf("Exemplares : %d\n", listaLivros[i].exemplares);
-        printf("Status     : %s\n", listaLivros[i].status ? "Disponível" : "Indisponível");
+        printf("Status     : %s\n", listaLivros[i].status ? "Disponivel" : "Indisponivel");
         printf("---------------------------------------------\n");
     }
 }
@@ -124,14 +123,14 @@ void pesquisarLivros() {
         printf("               PESQUISAR LIVRO               \n");
         printf("---------------------------------------------\n");
         printf("[1] Pesquisar por ID do Livro\n");
-        printf("[2] Pesquisar por Título\n");
+        printf("[2] Pesquisar por Titulo\n");
         printf("[3] Pesquisar por Autor\n");
         printf("[0] Voltar ao Menu Principal\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opcao: ");
         
         if (scanf("%d", &opcao) != 1) {
             while (getchar() != '\n'); 
-            printf("\n[ERRO] Entrada inválida! Digite um número.\n");
+            printf("\n[ERRO] Entrada invalida! Digite um numero.\n");
             continue;
         }
         while (getchar() != '\n'); 
@@ -148,12 +147,12 @@ void pesquisarLivros() {
                 if ((i + 1) == idBusca) {
                     printf("\n--- Livro Encontrado ---\n");
                     printf("ID Livro   : %d\n", i + 1);
-                    printf("Título     : %s\n", listaLivros[i].titulo);
+                    printf("Titulo     : %s\n", listaLivros[i].titulo);
                     printf("Autor      : %s\n", listaLivros[i].autor);
                     printf("Editora    : %s\n", listaLivros[i].editora);
                     printf("Ano        : %d\n", listaLivros[i].anoPublicado);
                     printf("Exemplares : %d\n", listaLivros[i].exemplares);
-                    printf("Status     : %s\n", listaLivros[i].status ? "Disponível" : "Indisponível");
+                    printf("Status     : %s\n", listaLivros[i].status ? "Disponivel" : "Indisponivel");
                     printf("---------------------------------------------\n");
                     encontrado = 1;
                     break;
@@ -166,7 +165,7 @@ void pesquisarLivros() {
 
         } else if (opcao == 2) {
             char tituloBusca[100];
-            printf("Digite o título (ou parte dele): ");
+            printf("Digite o titulo (ou parte dele): ");
             fgets(tituloBusca, sizeof(tituloBusca), stdin);
             tituloBusca[strcspn(tituloBusca, "\n")] = '\0';
 
@@ -181,13 +180,13 @@ void pesquisarLivros() {
                     printf("Editora    : %s\n", listaLivros[i].editora);
                     printf("Ano        : %d\n", listaLivros[i].anoPublicado);
                     printf("Exemplares : %d\n", listaLivros[i].exemplares);
-                    printf("Status     : %s\n", listaLivros[i].status ? "Disponível" : "Indisponível");
+                    printf("Status     : %s\n", listaLivros[i].status ? "Disponivel" : "Indisponivel");
                     printf("---------------------------------------------\n");
                     encontrado = 1;
                 }
             }
             if (!encontrado) {
-                printf("\n[AVISO] Nenhum livro encontrado com o título contendo '%s'.\n", tituloBusca);
+                printf("\n[AVISO] Nenhum livro encontrado com o titulo contendo '%s'.\n", tituloBusca);
             }
             break; 
         } else if (opcao == 3) {
@@ -202,12 +201,12 @@ void pesquisarLivros() {
                 if (strstr(listaLivros[i].autor, autorBusca) != NULL) {
                     printf("\n--- Livro Encontrado ---\n");
                     printf("ID Livro   : %d\n", i + 1);
-                    printf("Título     : %s\n", listaLivros[i].titulo);
+                    printf("Titulo     : %s\n", listaLivros[i].titulo);
                     printf("Autor      : %s\n", listaLivros[i].autor);
                     printf("Editora    : %s\n", listaLivros[i].editora);
                     printf("Ano        : %d\n", listaLivros[i].anoPublicado);
                     printf("Exemplares : %d\n", listaLivros[i].exemplares);
-                    printf("Status     : %s\n", listaLivros[i].status ? "Disponível" : "Indisponível");
+                    printf("Status     : %s\n", listaLivros[i].status ? "Disponivel" : "Indisponivel");
                     printf("---------------------------------------------\n");
                     encontrado = 1;
                 }
@@ -220,7 +219,7 @@ void pesquisarLivros() {
         } else if (opcao == 4) {
             return; 
         } else {
-            printf("\n[ERRO] Opção inválida! Tente novamente.\n");
+            printf("\n[ERRO] Opcao invalida! Tente novamente.\n");
         }
     }
 }
@@ -246,12 +245,12 @@ void editarLivros() {
         indice = idBusca - 1;
 
         if (indice < 0 || indice >= totalLivros) {
-            printf("\n[ERRO] ID do livro inválido!\n");
+            printf("\n[ERRO] ID do livro invalido!\n");
             return;
         }
 
         printf("\n--- Livro Encontrado [ID: %d] ---\n", idBusca);
-        printf("Título Atual   : %s\n", listaLivros[indice].titulo);
+        printf("Titulo Atual   : %s\n", listaLivros[indice].titulo);
         printf("Autor Atual    : %s\n", listaLivros[indice].autor);
         printf("Editora Atual  : %s\n", listaLivros[indice].editora);
         printf("Ano Atual      : %d\n", listaLivros[indice].anoPublicado);
@@ -259,25 +258,25 @@ void editarLivros() {
         printf("-----------------------------------\n");
 
         printf("Escolha o que deseja alterar:\n");
-        printf(" [1] Alterar Título\n");
+        printf(" [1] Alterar Titulo\n");
         printf(" [2] Alterar Autor\n");
         printf(" [3] Alterar Editora\n");
-        printf(" [4] Alterar Ano de Publicação\n");
+        printf(" [4] Alterar Ano de Publicacao\n");
         printf(" [5] Alterar Quantidade de Exemplares\n");
         printf(" [0] Cancelar\n");
-        printf("Opção: ");
+        printf("Opcao: ");
 
         if (scanf("%d", &opcao) == 1) {
             limparBuffer();
 
             switch (opcao) {
                 case 1:
-                    printf("Digite o novo Título: ");
+                    printf("Digite o novo Titulo: ");
                     fgets(novoBuffer, sizeof(novoBuffer), stdin);
                     novoBuffer[strcspn(novoBuffer, "\n")] = '\0';
                     if (strlen(novoBuffer) > 0) {
                         strcpy(listaLivros[indice].titulo, novoBuffer);
-                        printf("\n[SUCESSO] Título atualizado com sucesso!\n");
+                        printf("\n[SUCESSO] Titulo atualizado com sucesso!\n");
                     }
                     break;
 
@@ -302,14 +301,14 @@ void editarLivros() {
                     break;
 
                 case 4:
-                    printf("Digite o novo Ano de Publicação: ");
+                    printf("Digite o novo Ano de Publicacao: ");
                     if (scanf("%d", &novoAno) == 1) {
                         limparBuffer();
                         listaLivros[indice].anoPublicado = novoAno;
-                        printf("\n[SUCESSO] Ano de publicação atualizado com sucesso!\n");
+                        printf("\n[SUCESSO] Ano de publicacao atualizado com sucesso!\n");
                     } else {
                         limparBuffer();
-                        printf("\n[ERRO] Ano inválido!\n");
+                        printf("\n[ERRO] Ano invalido!\n");
                     }
                     break;
 
@@ -323,23 +322,23 @@ void editarLivros() {
                         printf("\n[SUCESSO] Quantidade de exemplares e status atualizados!\n");
                     } else {
                         limparBuffer();
-                        printf("\n[ERRO] Quantidade inválida!\n");
+                        printf("\n[ERRO] Quantidade invalida!\n");
                     }
                     break;
 
                 case 0:
-                    printf("\nEdição cancelada.\n");
+                    printf("\nEdicao cancelada.\n");
                     break;
 
                 default:
-                    printf("\n[ERRO] Opção inválida!\n");
+                    printf("\n[ERRO] Opcao invalida!\n");
             }
         } else {
             limparBuffer();
-            printf("\n[ERRO] Opção inválida!\n");
+            printf("\n[ERRO] Opcao invalida!\n");
         }
     } else {
         limparBuffer();
-        printf("\n[ERRO] Entrada inválida!\n");
+        printf("\n[ERRO] Entrada invalida!\n");
     }
 }
